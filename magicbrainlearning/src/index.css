@@ -1,0 +1,12 @@
+body {
+  margin: 0;
+  font-family: 'Courier New', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: linear-gradient(to right, rgb(126, 30, 134) 0%, rgb(74, 153, 226) 100%);
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+}

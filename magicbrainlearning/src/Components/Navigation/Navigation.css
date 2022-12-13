@@ -1,0 +1,8 @@
+.alignToLeft {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.maxNavigationWidth {
+    width: 200px;
+}
