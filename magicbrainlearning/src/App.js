@@ -25,6 +25,14 @@ class App extends Component {
       box: {},
       route: 'signin',
       isSignedIn: false,
+      user: {
+        id: '',
+        name: '',
+        email: '',
+        password: '',
+        entries: 0,
+        joined: ''
+      }
     }
   }
 
@@ -66,6 +74,17 @@ class App extends Component {
     this.setState({route: route});
   };
 
+  loadUser = (user) => {
+    this.setState({user: {
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      password: user.password,
+      entries: user.entries,
+      joined: user.joined
+    }})
+  };
+
   render() {
     const { isSignedIn, route, box, imageUrl } = this.state;
     return (
@@ -82,7 +101,7 @@ class App extends Component {
           : (
             route === 'signin'
             ? <SignIn onRouteChange={this.onRouteChange}/>
-            : <Register onRouteChange={this.onRouteChange}/>
+            : <Register onRouteChange={this.onRouteChange} loadUser={this.loadUser}/>
           )
         }
       </div>
