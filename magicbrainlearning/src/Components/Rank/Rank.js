@@ -1,11 +1,15 @@
 import React from 'react';
 import './Rank.css';
 
-const Rank = () => {
+const Rank = ({ name, entries }) => {
     return (
         <div>
-            <p className='center f3 white'>Mindaugas, you currently searched:</p>
-            <p className='center f1 white removingEmptySpace'>#5 times!</p>
+            <div className='f3 white'>
+                {`${name}, your current entry count is:`}
+            </div>
+            <div className='f1 white removingEmptySpace'>
+                {entries}
+            </div>
         </div>
     )
 }
