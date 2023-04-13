@@ -10,12 +10,10 @@ const postgres = knex({
         host : '127.0.0.1',
         port : 5432,
         user : 'postgres',
-        password : '',
+        password : 'test',
         database : 'MagicBrainLearning'
     }
 });
-
-console.log(postgres.select('*').from('users'));
 
 const app = express();
 
@@ -72,16 +70,11 @@ app.post('/signin', (req, res) => {
 
 app.post('/register', (req, res) => {
     const { name, email, password} = req.body;
-    bcrypt.hash(password, null, null, function(err, hash) {
-        console.log(hash);
-    });
-    database.users.push({
-        id: '3',
+    postgres('users').insert({
         name: name,
         email: email,
-        entries: 0,
         joined: new Date()
-    });
+    }).then(console.log);
     res.json(database.users[database.users.length-1]);
 });
 
