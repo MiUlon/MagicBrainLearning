@@ -55,17 +55,22 @@ app.get('/', (req, res) => {
 });
 
 app.post('/signin', (req, res) => {
-    bcrypt.compare("Mindaugas3", '$2a$10$m.xaDxAMpS2SdmWsUSpHrOaLYmP0u0XihWSRcygawH6F/1htgvuwO', function(err, res) {
-        console.log('Response: ', res)
-    });
-    bcrypt.compare("veggies", '$2a$10$m.xaDxAMpS2SdmWsUSpHrOaLYmP0u0XihWSRcygawH6F/1htgvuwO', function(err, res) {
-        console.log('Response: ', res)
-    });
-    if (req.body.email = database.users[0].email && req.body.password === database.users[0].password) {
-        res.json('Success');
-    } else {
-        res.status(400).json('Error while signin in.');
-    };
+    postgres.select('email', 'hash').from('login')
+        .where('email', '=', req.body.email)
+        .then (data => {
+            const isValid = bcrypt.compareSync(req.body.password, data[0].hash);
+            if (isValid) {
+                return postgres.select('*').from('users')
+                    .where('email', '=', req.body.email)
+                    .then (user => {
+                        res.json(user[0])
+                    })
+                    .catch(error => res.status(400).json('Cannot login'))
+            } else {
+                res.status(400).json('Cannot login')
+            }
+        })
+    .catch(error => res.status(400).json('Cannot login'))
 });
 
 app.post('/register', (req, res) => {
