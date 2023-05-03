@@ -6,7 +6,7 @@ import knex from 'knex';
 import { handelRegister } from './Controllers/register.js'; 
 import { handelSignin } from './Controllers/signin.js';
 import { handelProfile } from './Controllers/profile.js';
-import { handelImage } from './Controllers/image.js';
+import { handelImage, handleApiCall } from './Controllers/image.js';
 
 const postgres = knex({
     client: 'pg',
@@ -32,6 +32,7 @@ app.post('/signin', (req, res) => { handelSignin(req, res, postgres, bcrypt) });
 app.post('/register', (req, res) => { handelRegister(req, res, postgres, bcrypt) });
 app.get('/profile/:id', (req, res) => { handelProfile(req, res, postgres) });
 app.put('/image', (req, res) => { handelImage(req, res, postgres) });
+app.post('/imageurl', (req, res) => { handleApiCall(req, res) });
 
 app.listen(3001, () => {
     console.log('App is working on port 3001.');
